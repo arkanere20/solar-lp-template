@@ -15,7 +15,7 @@ Intake form ──► client.config.ts + photos ──► push to GitHub ──�
 
 | What | Where | Notes |
 | --- | --- | --- |
-| Intake form site | Netlify → `client-intake-form` folder (drag & drop) | Forms → enable form detection, then email notifications to you |
+| Intake Google Form | `integrations/google-forms/IntakeForm.gs` → run `createIntakeForm` once | Same form link for every client; responses go to a Google Sheet |
 | Lead sheet web app | `integrations/google-sheets/Code.gs` | One deployment for all clients — each client gets its own tab |
 | Template repo | GitHub `solar-lp-template` | Mark as *Template repository* in GitHub settings |
 
@@ -23,11 +23,9 @@ Intake form ──► client.config.ts + photos ──► push to GitHub ──�
 
 ## 1. Collect details (client)
 
-1. Send the client the intake form link.
-2. They fill it in. Their progress saves automatically on their device.
-3. You get an email from Netlify when they submit. Photos arrive through a Drive link or on WhatsApp.
-
-**Get the submission:** Netlify → intake site → **Forms → solar-client-intake** → open the submission → copy all the text (or **Download as CSV**). Download the logo attachment.
+1. Send the client the Google Form link.
+2. In the same Apps Script, set `CLIENT_NAME` and run `createClientPhotoFolder`. Send the client the Drive link it logs. It contains ready-made folders: `1 Logo`, `2 Main banner`, `3 Team at work`, `4–6 Project 1–3`, `7 Extra`. Project numbers match the form, so each photo is linked to the right project.
+3. When they're done: copy the client's row from the responses Sheet, and download the Drive folder (right-click → Download gives you a zip).
 
 ## 2. Create the client's project (2 min)
 
