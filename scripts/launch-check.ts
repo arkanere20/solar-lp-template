@@ -14,6 +14,7 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { client } from '../src/client.config.ts'
+import { parseYouTube } from '../src/lib/youtube.ts'
 
 const root = join(import.meta.dirname, '..')
 const errors: string[] = []
@@ -96,6 +97,12 @@ if (
   warnings.push(
     'credentials are empty — a placeholder box is shown in "Why choose us"',
   )
+client.videos.forEach((v, i) => {
+  if (!parseYouTube(v.url))
+    errors.push(`videos[${i}].url is not a valid YouTube link: "${v.url}"`)
+})
+if (client.videos.length > 6) warnings.push('only the first 6 videos are shown')
+
 if (!client.privacyPolicyUpdated)
   warnings.push(
     'privacyPolicyUpdated is empty — privacy page shows a placeholder date',

@@ -15,6 +15,7 @@ Single-page lead-generation site for residential rooftop solar installers in Ind
 - `src/data/site.ts` — derives `site` (formatted phone, WhatsApp link, URL) and the `t()` token filler from the config. Lead destinations: Netlify Forms (primary) + Google Sheets (auto when the env var is set).
 - `src/data/content.ts` — standard solar copy. Uses config for DISCOM/city, and projects/testimonials (falls back to placeholder cards).
 - `src/lib/theme.ts` — OKLCH palette from `brand.primary` / `brand.accent`. Emitted as CSS variables on `<html>`, which override the `forest-*` / `sun-*` tokens in `styles.css`.
+- `src/lib/youtube.ts` — parses YouTube/Shorts links for the optional Videos section (click-to-load embeds via youtube-nocookie).
 - `src/lib/solar.ts` — savings + PM Surya Ghar subsidy maths (tariff and generation from config).
 - `src/lib/leads.ts` — `buildLead` → `submitLead`; UTM/gclid capture; dataLayer events + Google Ads conversions from config labels.
 - `src/routes/api.leads.ts` — server route that forwards to `GOOGLE_SHEETS_WEBHOOK_URL` (+ `GOOGLE_SHEETS_TOKEN`). Returns 204 no-op when unset.

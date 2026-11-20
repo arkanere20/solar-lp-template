@@ -172,6 +172,14 @@ export const client = {
     rating: number
   }>,
 
+  /**
+   * YouTube videos — customer testimonials, installation walkthroughs, etc.
+   * Paste any YouTube link (normal, youtu.be or Shorts). Up to 6.
+   * Empty = the video section is hidden. Videos load only when tapped,
+   * so they don't slow the page down.
+   */
+  videos: [] as Array<{ url: string; title: string }>,
+
   /** Extra client-specific FAQs, shown after the standard ones. */
   extraFaqs: [] as Array<{ q: string; a: string }>,
 

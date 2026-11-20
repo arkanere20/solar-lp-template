@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { estimateSavings, pmSuryaGharSubsidy } from './solar'
 import { normaliseMobile, validateLead } from './validation'
 import { buildPalette, hexToOklch } from './theme'
+import { parseYouTube } from './youtube'
 import { site, t } from '../data/site'
 
 const valid = {
@@ -68,5 +69,28 @@ describe('copy tokens', () => {
   it('fills client tokens', () => {
     expect(t('{name} in {city}')).toBe(`${site.name} in ${site.location.city}`)
     expect(t('{unknown}')).toBe('{unknown}')
+  })
+})
+
+describe('YouTube links', () => {
+  it('reads ids from common link formats', () => {
+    const id = 'dQw4w9WgXcQ'
+    for (const url of [
+      `https://www.youtube.com/watch?v=${id}&t=10s`,
+      `https://youtu.be/${id}?si=abc`,
+      `https://m.youtube.com/watch?v=${id}`,
+      `https://www.youtube.com/embed/${id}`,
+      `https://www.youtube.com/live/${id}`,
+    ])
+      expect(parseYouTube(url)).toEqual({ id, vertical: false })
+    expect(parseYouTube(`https://youtube.com/shorts/${id}`)).toEqual({
+      id,
+      vertical: true,
+    })
+  })
+  it('rejects non-video links', () => {
+    expect(parseYouTube('https://www.youtube.com/@sunrisesolar')).toBeNull()
+    expect(parseYouTube('https://example.com/watch?v=dQw4w9WgXcQ')).toBeNull()
+    expect(parseYouTube('not a url')).toBeNull()
   })
 })

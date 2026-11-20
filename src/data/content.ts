@@ -5,6 +5,7 @@
  */
 import { client } from '../client.config'
 import { t } from './site'
+import { parseYouTube } from '../lib/youtube'
 
 export const benefits = [
   {
@@ -84,6 +85,12 @@ export const testimonials = client.testimonials.length
       rating: 0,
       placeholder: true,
     }))
+
+/** Valid YouTube videos from config (invalid links are skipped). */
+export const videos = client.videos.slice(0, 6).flatMap((v) => {
+  const parsed = parseYouTube(v.url)
+  return parsed ? [{ ...parsed, title: t(v.title) }] : []
+})
 
 export const steps = [
   {

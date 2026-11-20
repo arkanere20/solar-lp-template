@@ -64,6 +64,7 @@ What Claude does, field by field:
 | project1–3_* + photos | `projects[]` with `/img/project1.jpg` … |
 | review1–3_* (+ permission ticked) | `testimonials[]` — **only if permission = yes** |
 | customer_questions | `extraFaqs[]` |
+| YouTube links (testimonials, installation videos) | `videos[]` — `{ url, title }`; any YouTube/Shorts link. Section hidden when empty |
 | id | short slug of the business name, e.g. `shree-ganesh-solar` |
 | privacyPolicyUpdated | today's date, e.g. `20 November 2026` |
 

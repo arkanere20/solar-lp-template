@@ -8,8 +8,10 @@ import {
   steps,
   subsidySlabs,
   testimonials,
+  videos,
   whyUs,
 } from '../data/content'
+import { youTubeEmbed, youTubeThumb } from '../lib/youtube'
 import { LeadForm } from './LeadForm'
 import { SavingsCalculator } from './SavingsCalculator'
 import { ContactLink, Footer, Header, MobileActionBar } from './SiteChrome'
@@ -22,6 +24,7 @@ import {
   LeafIcon,
   MapPinIcon,
   PhoneIcon,
+  PlayIcon,
   ShieldIcon,
   SunIcon,
   WalletIcon,
@@ -53,6 +56,7 @@ export function LandingPage() {
         <WhyUs />
         <Projects />
         <Testimonials />
+        <Videos />
         <Process />
         <Faq />
         <FinalCta />
@@ -542,6 +546,88 @@ function Testimonials() {
         <GoogleReviewsLink />
       </div>
     </section>
+  )
+}
+
+/** Customer / installation videos. Hidden when no videos are configured. */
+function Videos() {
+  if (!videos.length) return null
+  const allVertical = videos.every((v) => v.vertical)
+  return (
+    <section id="videos" className="py-20 sm:py-24">
+      <div className="container-x">
+        <SectionHead
+          eyebrow="Watch"
+          title="See our work and hear from customers"
+        />
+        <div
+          className={`mx-auto mt-12 grid gap-6 ${
+            allVertical
+              ? 'max-w-4xl grid-cols-2 md:grid-cols-3'
+              : videos.length === 1
+                ? 'max-w-3xl'
+                : 'md:grid-cols-2 lg:grid-cols-3'
+          }`}
+        >
+          {videos.map((v) => (
+            <VideoCard key={v.id} {...v} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function VideoCard({
+  id,
+  title,
+  vertical,
+}: {
+  id: string
+  title: string
+  vertical: boolean
+}) {
+  const [playing, setPlaying] = useState(false)
+  return (
+    <figure>
+      <div
+        className={`relative overflow-hidden rounded-2xl bg-forest-950 ring-1 ring-forest-900/10 ${vertical ? 'aspect-[9/16]' : 'aspect-video'}`}
+      >
+        {playing ? (
+          <iframe
+            src={youTubeEmbed(id)}
+            title={title || 'Video'}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            className="group absolute inset-0 h-full w-full"
+            aria-label={`Play video: ${title || 'video'}`}
+          >
+            <img
+              src={youTubeThumb(id)}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover opacity-90 transition group-hover:opacity-100"
+            />
+            <span className="absolute inset-0 grid place-items-center bg-black/10">
+              <span className="grid size-16 place-items-center rounded-full bg-sun-400 text-forest-950 shadow-lg transition group-hover:scale-105">
+                <PlayIcon className="ml-1 size-7" />
+              </span>
+            </span>
+          </button>
+        )}
+      </div>
+      {title && (
+        <figcaption className="mt-3 font-semibold text-forest-950">
+          {title}
+        </figcaption>
+      )}
+    </figure>
   )
 }
 
