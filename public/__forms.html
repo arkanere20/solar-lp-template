@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Solar lead form registration</title>
+  </head>
+  <body>
+    <!-- Keep field names in sync with toNetlifyFields() in src/lib/leads.ts -->
+    <form
+      name="solar-lead"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="solar-lead" />
+      <input name="subject" />
+      <input name="name" />
+      <input name="mobile" type="tel" />
+      <input name="location" />
+      <input name="monthly-bill" />
+      <input name="property-type" />
+      <input name="consent" />
+      <input name="estimated-system-kw" />
+      <input name="landing-page" />
+      <input name="submitted-at" />
+      <input name="utm_source" />
+      <input name="utm_medium" />
+      <input name="utm_campaign" />
+      <input name="utm_term" />
+      <input name="utm_content" />
+      <input name="gclid" />
+      <input name="bot-field" />
+    </form>
+  </body>
+</html>
